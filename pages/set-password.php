@@ -542,14 +542,6 @@ button:disabled{
 
         </div>
 
-        <script>
-
-            setTimeout(() => {
-                window.location.href = "login.php";
-            }, 5000);
-
-        </script>
-
         <?php } ?>
 
         <div class="footer">

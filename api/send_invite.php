@@ -196,91 +196,205 @@ $statement->bind_param(
     if (is_file($googlePlayImagePath)) {
         $mail->addEmbeddedImage($googlePlayImagePath, 'google-play-badge', 'googlePlay.png');
     }
-    $mail->Subject = "You've Been Invited to Join Drivault";
-    $mail->Body = sprintf(
-        '<div style="font-family:Arial,sans-serif;line-height:1.6;color:#1f2937;max-width:640px;margin:0 auto;">'
-        . '<div style="text-align:center;margin-bottom:24px;">%9$s</div>'
-        . '<h2 style="color:#111827;">You&rsquo;ve Been Invited to Join Drivault &#128640;</h2>'
-        . '<p>Hello %1$s,</p>'
-        . '<p>You have been invited by <strong>%2$s</strong> to join Drivault - your secure cloud storage and file management platform.</p>'
-        . '<p>With Drivault, you can:</p>'
-        . '<ul>'
-        . '<li>Securely store and manage your files</li>'
-        . '<li>Access your data anytime, anywhere</li>'
-        . '<li>Share files safely with your team and friends</li>'
-        . '<li>Get additional free storage through referrals</li>'
-        . '</ul>'
-        . '<p>To activate your account and set your password, click the button below:</p>'
-        . '<p style="margin:24px 0;">'
-        . '<a href="%3$s" style="background:#43E08B;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:6px;display:inline-block;font-weight:600;">Accept</a>'
-        . '</p>'
-        . '<p><strong>Your login details:</strong><br>'
-        . 'Username: %6$s</p>'
-        . '<p><strong>Important:</strong></p>'
-        . '<ul>'
-        . '<li>This invitation link is valid for a limited time.</li>'
-        . '<li>Please verify your mobile number using OTP during registration.</li>'
-        . '</ul>'
-        . '<div style="margin-top:28px;padding-top:24px;border-top:1px solid #e5e7eb;text-align:center;">'
-        . '<p style="margin:0 0 14px;"><strong>Download the Drivault mobile app</strong></p>'
-        . '<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto 8px;border-collapse:separate;border-spacing:12px 0;">'
-        . '<tr>'
-        . '<td style="vertical-align:middle;">'
-        . '<a href="%4$s" style="display:inline-block;text-decoration:none;">%10$s</a>'
-        . '</td>'
-        . '<td style="vertical-align:middle;">'
-        . '<a href="%5$s" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;padding:12px 18px;border-radius:8px;font-weight:600;">Download on the App Store</a>'
-        . '</td>'
-        . '</tr>'
-        . '</table>'
-        . '</div>'
-        . '<p>If you did not expect this invitation, you can safely ignore this email.</p>'
-        . '<p>Thanks,<br>Team Drivault<br><a href="%7$s">%7$s</a><br><a href="mailto:%8$s">%8$s</a></p>'
-        . '</div>',
-        htmlspecialchars($name, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($inviterName, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($verificationLink, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($googlePlayLink, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($appStoreLink, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($phone, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($websiteUrl, ENT_QUOTES, 'UTF-8'),
-        htmlspecialchars($supportEmail, ENT_QUOTES, 'UTF-8'),
-        is_file($brandIconPath)
-            ? '<img src="cid:drivault-brand-icon" alt="Drivault" style="display:inline-block;width:72px;height:72px;border:0;">'
-            : '<strong style="font-size:20px;color:#111827;">Drivault</strong>',
-        is_file($googlePlayImagePath)
-            ? '<img src="cid:google-play-badge" alt="Get it on Google Play" style="display:block;width:180px;max-width:100%;border:0;">'
-            : 'Android: <span style="color:#0d6efd;">' . htmlspecialchars($googlePlayLink, ENT_QUOTES, 'UTF-8') . '</span>'
-    );
+   $mail->Subject = "Your Friend Invited You to Join Drivault";
+
+$mail->Body = sprintf(
+
+'<div style="font-family:Arial,sans-serif;padding:30px;background:#f5f7fa;">
+
+<div style="max-width:650px;margin:auto;background:#fff;border-radius:12px;padding:35px;">
+
+<div style="text-align:center;">
+
+%9$s
+
+<h2 style="color:#43E08B;">
+Welcome to Drivault 
+</h2>
+
+</div>
+
+<p>Hi <strong>%1$s</strong>,</p>
+
+<p>
+
+Your friend
+<strong>%2$s</strong>
+has invited you to join
+<strong>Drivault</strong> 🎉
+
+</p>
+
+<p>
+
+Store, access and share your files securely from anywhere.
+
+</p>
+
+<h3>Benefits:</h3>
+
+<ul>
+
+<li>☁ Secure cloud storage</li>
+
+<li>📁 Access anywhere</li>
+
+<li>🔒 Safe file sharing</li>
+
+<li>🎁 Earn free storage rewards</li>
+
+</ul>
+
+<div style="
+background:#eefbf4;
+padding:15px;
+margin-top:20px;
+border-left:4px solid #43E08B;
+">
+
+<b>Your Account Details</b>
+
+<p>
+
+Username:
+<strong>%6$s</strong>
+
+</p>
+
+<p>
+
+Password:
+Create during setup
+
+</p>
+
+</div>
+
+<div style="
+text-align:center;
+margin-top:30px;
+">
+
+<a href="%3$s"
+
+style="
+background:#43E08B;
+padding:15px 30px;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+">
+
+Accept Invitation
+
+</a>
+
+</div>
+
+<p style="margin-top:30px;">
+
+Please verify your mobile number using OTP.
+
+</p>
+
+<p>
+
+If you were not expecting this invitation,
+you can safely ignore this email.
+
+</p>
+
+<div style="
+background:#f8fafc;
+border:1px solid #e5e7eb;
+border-radius:12px;
+padding:20px;
+margin-top:28px;
+text-align:center;
+">
+
+<h3 style="margin:0 0 8px;color:#111827;">
+Download Drivault App
+</h3>
+
+<p style="margin:0 0 18px;color:#475569;">
+Install the Drivault mobile app to access your files anytime.
+</p>
+
+<table role="presentation" cellspacing="0" cellpadding="0" style="margin:0 auto;border-collapse:separate;border-spacing:12px 0;">
+<tr>
+<td style="vertical-align:middle;">
+<a href="%4$s" style="display:inline-block;text-decoration:none;">
+%10$s
+</a>
+</td>
+<td style="vertical-align:middle;">
+<a href="%5$s" style="
+display:inline-block;
+background:#111827;
+color:#ffffff;
+text-decoration:none;
+padding:13px 18px;
+border-radius:8px;
+font-weight:bold;
+">
+Download on the App Store
+</a>
+</td>
+</tr>
+</table>
+
+</div>
+
+<hr>
+
+<p>
+
+Thanks,<br>
+
+Team Drivault
+
+</p>
+
+</div>
+
+</div>',
+
+htmlspecialchars($name,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($inviterName,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($verificationLink,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($googlePlayLink,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($appStoreLink,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($phone,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($websiteUrl,ENT_QUOTES,'UTF-8'),
+htmlspecialchars($supportEmail,ENT_QUOTES,'UTF-8'),
+
+is_file($brandIconPath)
+? '<img src="cid:drivault-brand-icon" style="width:70px;">'
+: '<strong>Drivault</strong>',
+
+is_file($googlePlayImagePath)
+? '<img src="cid:google-play-badge" style="width:180px;">'
+: 'Google Play'
+
+);
     $mail->AltBody = sprintf(
-        "Subject: You've Been Invited to Join Drivault\n\n"
-        . "Hello %s,\n\n"
-        . "You have been invited by %s to join Drivault - your secure cloud storage and file management platform.\n\n"
-        . "With Drivault, you can:\n"
-        . "- Securely store and manage your files\n"
-        . "- Access your data anytime, anywhere\n"
-        . "- Share files safely with your team and friends\n"
-        . "- Get additional free storage through referrals\n\n"
-        . "To activate your account and set your password, open this link:\n%s\n\n"
-        . "Download the mobile app:\n"
-        . "Android: %s\n"
-        . "iPhone/iPad: %s\n\n"
-        . "Your login details:\n"
-        . "Username: %s\n"
-        . "Password: The password you create during setup\n\n"
-        . "Important:\n"
-        . "- This invitation link is valid for a limited time.\n"
-        . "- Please verify your mobile number using OTP during registration.\n\n"
-        . "If you did not expect this invitation, you can safely ignore this email.\n\n"
-        . "Thanks,\nTeam Drivault\n%s\n%s",
+        "Hi %s,\n\n"
+        . "Your friend %s has invited you to join Drivault.\n\n"
+        . "Accept invitation:\n%s\n\n"
+        . "Your login username: %s\n"
+        . "Password: Create during setup\n\n"
+        . "Download Drivault App:\n"
+        . "Google Play: %s\n"
+        . "App Store: %s\n\n"
+        . "Thanks,\nTeam Drivault",
         $name,
         $inviterName,
         $verificationLink,
-        $googlePlayLink,
-        $appStoreLink,
         $phone,
-        $websiteUrl,
-        $supportEmail
+        $googlePlayLink,
+        $appStoreLink
     );
     $mail->send();
 
