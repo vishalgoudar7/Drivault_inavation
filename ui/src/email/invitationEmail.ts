@@ -1,0 +1,122 @@
+import { invitationPlaceholders } from '../data/placeholders';
+
+type EmailData = typeof invitationPlaceholders;
+
+const cardStyle =
+  'background:#ffffff;border:1px solid #DDEFE5;border-radius:24px;overflow:hidden;box-shadow:0 12px 30px rgba(15,23,42,0.08);';
+const textStyle = 'font-family:Inter,Arial,sans-serif;color:#475569;font-size:16px;line-height:26px;';
+const h1Style = 'font-family:Inter,Arial,sans-serif;color:#0F172A;font-size:34px;line-height:40px;font-weight:800;margin:0;';
+const h2Style = 'font-family:Inter,Arial,sans-serif;color:#0F172A;font-size:20px;line-height:28px;font-weight:700;margin:0 0 8px;';
+
+export function buildInvitationEmail(data: EmailData = invitationPlaceholders): string {
+  return `
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>You've Been Invited</title>
+  </head>
+  <body style="margin:0;padding:24px;background:#F8FAFC;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#F8FAFC;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:680px;border-collapse:collapse;">
+            <tr>
+              <td style="${cardStyle}">
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                  <tr>
+                    <td style="padding:36px 36px 32px;background:linear-gradient(135deg,#43E08B 0%,#97f2bc 100%);">
+                      <div style="font-family:Inter,Arial,sans-serif;font-size:13px;line-height:18px;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:#0F172A;margin-bottom:18px;">
+                        Drivault
+                      </div>
+                      <h1 style="${h1Style}">You’ve Been Invited</h1>
+                      <p style="font-family:Inter,Arial,sans-serif;color:#0F172A;font-size:17px;line-height:28px;margin:14px 0 0;">
+                        Join secure cloud storage that works everywhere.
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:36px;">
+                      <p style="${textStyle};margin:0 0 18px;">Hello <strong style="color:#0F172A;">${data.USER_NAME}</strong>,</p>
+                      <p style="${textStyle};margin:0 0 18px;">
+                        <strong style="color:#0F172A;">${data.INVITER_NAME}</strong> has invited you to join Drivault and start managing files with a premium, secure cloud workspace.
+                      </p>
+                      <p style="${textStyle};margin:0 0 28px;">
+                        Complete your onboarding to set your password, verify your mobile number, and start syncing your devices.
+                      </p>
+                      <table role="presentation" cellspacing="0" cellpadding="0" style="border-collapse:collapse;margin:0 0 30px;">
+                        <tr>
+                          <td>
+                            <a href="${data.INVITE_LINK}" style="display:inline-block;background:#43E08B;color:#ffffff;text-decoration:none;font-family:Inter,Arial,sans-serif;font-size:15px;font-weight:700;line-height:20px;padding:15px 26px;border-radius:999px;">
+                              Activate Invitation
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                        <tr>
+                          <td colspan="3" style="padding:0 0 20px;">
+                            <h2 style="${h2Style}">Get started in three simple steps</h2>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td valign="top" width="31%" style="padding:0 10px 0 0;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ffffff;border:1px solid #DDEFE5;border-radius:20px;">
+                              <tr>
+                                <td style="padding:20px 18px;">
+                                  <div style="width:44px;height:44px;border-radius:14px;background:#EAFBF2;color:#43E08B;font-family:Inter,Arial,sans-serif;font-size:14px;font-weight:800;line-height:44px;text-align:center;margin-bottom:14px;">01</div>
+                                  <div style="${h2Style}font-size:17px;line-height:24px;">Get Your Invite</div>
+                                  <p style="${textStyle};font-size:14px;line-height:23px;margin:0;">Open your invitation and activate access in one click.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td valign="middle" width="7%" align="center" style="padding:0;">
+                            <div style="height:2px;background:#43E08B;opacity:0.6;"></div>
+                          </td>
+                          <td valign="top" width="31%" style="padding:0 0 0 10px;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ffffff;border:1px solid #DDEFE5;border-radius:20px;">
+                              <tr>
+                                <td style="padding:20px 18px;">
+                                  <div style="width:44px;height:44px;border-radius:14px;background:#EAFBF2;color:#43E08B;font-family:Inter,Arial,sans-serif;font-size:14px;font-weight:800;line-height:44px;text-align:center;margin-bottom:14px;">02</div>
+                                  <div style="${h2Style}font-size:17px;line-height:24px;">Sync Your Devices</div>
+                                  <p style="${textStyle};font-size:14px;line-height:23px;margin:0;">Verify your OTP and continue securely across phone and desktop.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="3" style="padding:12px 0;"></td>
+                        </tr>
+                        <tr>
+                          <td valign="top" width="31%" style="padding:0 10px 0 0;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse;background:#ffffff;border:1px solid #DDEFE5;border-radius:20px;">
+                              <tr>
+                                <td style="padding:20px 18px;">
+                                  <div style="width:44px;height:44px;border-radius:14px;background:#EAFBF2;color:#43E08B;font-family:Inter,Arial,sans-serif;font-size:14px;font-weight:800;line-height:44px;text-align:center;margin-bottom:14px;">03</div>
+                                  <div style="${h2Style}font-size:17px;line-height:24px;">Invite &amp; Earn</div>
+                                  <p style="${textStyle};font-size:14px;line-height:23px;margin:0;">Download the app, invite others, and grow your free storage.</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td colspan="2" style="padding-left:16px;">
+                            <p style="${textStyle};margin:0 0 10px;"><strong style="color:#0F172A;">Your username:</strong> ${data.USER_PHONE}</p>
+                            <p style="${textStyle};margin:0;">Use the password you create during setup to sign in from any device.</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
