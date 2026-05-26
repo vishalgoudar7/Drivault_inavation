@@ -86,6 +86,74 @@ $smtpPassword = trim((string) ($mailConfig['password'] ?? ''));
 $smtpFromName = trim((string) ($mailConfig['from_name'] ?? 'Team Drivault'));
 $sessionInviterName = trim((string) ($_SESSION['admin_name'] ?? ''));
 $inviterName = trim((string) ($_POST['inviter_name'] ?? ($sessionInviterName !== '' ? $sessionInviterName : ($mailConfig['inviter_name'] ?? $smtpFromName))));
+$displayName = $inviterName;
+
+/*
+Example:
+$inviter_email = 7892660797@login.drivault.com
+
+userid becomes:
+7892660797
+*/
+
+$inviterUserId = explode(
+    '@',
+    $inviter_email
+)[0];
+
+if($inviterUserId !== ''){
+
+    $curlHandle = curl_init();
+
+    curl_setopt_array($curlHandle,[
+
+        CURLOPT_URL =>
+        'http://login.drivault.com/ocs/v1.php/cloud/users/' .
+        rawurlencode($inviterUserId),
+
+        CURLOPT_RETURNTRANSFER => true,
+
+        CURLOPT_HTTPAUTH =>
+        CURLAUTH_BASIC,
+
+        CURLOPT_USERPWD =>
+        'admin:kuRsef-gobno8-gankux',
+
+        CURLOPT_HTTPHEADER => [
+
+            'OCS-APIRequest: true',
+            'Accept: application/json'
+
+        ]
+
+    ]);
+
+    $responseBody =
+        curl_exec($curlHandle);
+
+    curl_close($curlHandle);
+
+    if($responseBody){
+
+        $userData =
+            json_decode(
+                $responseBody,
+                true
+            );
+
+        $displayName =
+            trim(
+                (string)(
+                    $userData['ocs']
+                    ['data']
+                    ['displayname']
+                    ?? $inviterName
+                )
+            );
+    }
+}
+
+$inviterName = $displayName;
 $websiteUrl = trim((string) ($mailConfig['website_url'] ?? 'https://drivault.example.com'));
 $supportEmail = trim((string) ($mailConfig['support_email'] ?? 'support@drivault.example.com'));
 $googlePlayLink = trim((string) ($mailConfig['google_play_link'] ?? 'https://play.google.com/store'));

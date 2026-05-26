@@ -25,22 +25,43 @@ if ($inviterEmail === '') {
     exit;
 }
 
-if (
-    preg_match(
-        '/^[A-Za-z0-9]{3,15}$/',
-        $inviterEmail
-    ) !== 1
-) {
+// if (
+//     preg_match(
+//         '/^[A-Za-z0-9]{3,15}$/',
+//         $inviterEmail
+//     ) !== 1
+// ) {
+//     http_response_code(422);
+
+//     echo json_encode([
+//         'status' => false,
+//         'message' => 'Invalid inviter value.',
+//     ]);
+
+//     exit;
+// }
+
+$isEmail = filter_var(
+    $inviterEmail,
+    FILTER_VALIDATE_EMAIL
+);
+
+$isPhone = preg_match(
+    '/^[0-9]{10}$/',
+    $inviterEmail
+);
+
+if (!$isEmail && !$isPhone) {
+
     http_response_code(422);
 
     echo json_encode([
         'status' => false,
-        'message' => 'Invalid inviter value.',
+        'message' => 'Enter valid email or mobile number.',
     ]);
 
     exit;
 }
-
 $conn->set_charset('utf8mb4');
 
 $statement = $conn->prepare(
