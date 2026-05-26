@@ -107,16 +107,21 @@ if ($email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 
 if ($inviterEmail !== '') {
 
-    if (
-        preg_match(
-            '/^[A-Za-z0-9]{3,15}$/',
-            $inviterEmail
-        ) !== 1
-    ) {
+    $isEmail = filter_var(
+        $inviterEmail,
+        FILTER_VALIDATE_EMAIL
+    );
+
+    $isPhone = preg_match(
+        '/^[0-9]{10}$/',
+        $inviterEmail
+    );
+
+    if (!$isEmail && !$isPhone) {
 
         jsonResponse(422, [
             'status' => false,
-            'message' => 'Invalid inviter value.',
+            'message' => 'Enter valid email or mobile number.',
         ]);
     }
 }

@@ -9,6 +9,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../vendor/autoload.php';
 
+$appConfig = require __DIR__ . '/../config/app.php';
 $mailConfig = require __DIR__ . '/../config/mail.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
@@ -33,16 +34,9 @@ function formatDatabaseErrorMessage(mysqli_sql_exception $exception): string
     return 'Unable to save the invitation. Check the database configuration.';
 }
 
-function buildPublicUrl(string $path): string
+function buildPublicUrl(string $baseUrl, string $path): string
 {
-    $https = (
-        (!empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off') ||
-        (int) ($_SERVER['SERVER_PORT'] ?? 80) === 443
-    );
-    $scheme = $https ? 'https' : 'http';
-    $host = 'localhost';
-
-    return sprintf('%s://%s/%s', $scheme, $host, ltrim($path, '/'));
+    return rtrim($baseUrl, '/') . '/' . ltrim($path, '/');
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -72,10 +66,9 @@ if (preg_match('/^[0-9+\-\s()]{7,20}$/', $phone) !== 1) {
 }
 
 $token = bin2hex(random_bytes(32));
-$scriptDir = str_replace('\\', '/', dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/php_invitation_system/api/send_invite.php')));
-$projectBasePath = preg_replace('#/api$#', '', $scriptDir) ?: '/php_invitation_system';
 $verificationLink = buildPublicUrl(
-    sprintf('%s/api/generate_otp.php?token=%s', rtrim($projectBasePath, '/'), urlencode($token))
+    (string) ($appConfig['base_url'] ?? 'http://localhost/php_invitation_system'),
+    sprintf('api/generate_otp.php?token=%s', urlencode($token))
 );
 
 $smtpHost = (string) ($mailConfig['host'] ?? '');
