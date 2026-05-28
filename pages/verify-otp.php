@@ -49,7 +49,7 @@ if ($token !== '') {
 
 <title>Verify OTP</title>
 
-<link rel="icon" type="image/x-icon" href="/php_invitation_system/assets/Photos/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/assets/Photos/favicon.ico">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -304,7 +304,7 @@ button:disabled{
         <div class="logo">
 
             <div class="logo-box">
-                <img src="/php_invitation_system/assets/Photos/icon-192.png" alt="Drivault logo">
+                <img src="/assets/Photos/icon-192.png" alt="Drivault logo">
             </div>
 
             <h1>Drivault</h1>
@@ -384,7 +384,9 @@ button:disabled{
                     name="otp"
                     placeholder="Enter OTP"
                     autocomplete="off"
-                    maxlength="10"
+                    inputmode="numeric"
+                    pattern="[0-9]{4}"
+                    maxlength="4"
                     required
                 >
 
@@ -428,7 +430,7 @@ button:disabled{
         </div>
 
         <div class="footer">
-            Â© 2026 Drivault
+            © 2026 Drivault
         </div>
 
     </div>
@@ -521,23 +523,39 @@ function generateOtp() {
 
     generateBtn.disabled = true;
 
-    generateBtn.style.display = 'none';
-
     loader.style.display = 'block';
 
-    setTimeout(() => {
+    const formData = new FormData();
+    formData.append('token', <?php echo json_encode($token, JSON_UNESCAPED_UNICODE); ?>);
+
+    fetch('../api/generate_otp.php', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(async (response) => {
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok || payload.status === false) {
+            throw new Error(payload.message || 'Unable to generate OTP');
+        }
 
         loader.style.display = 'none';
+        generateBtn.style.display = 'none';
 
-        showToast("OTP has been sent to your mobile number");
+        showToast(payload.message || "OTP has been sent to your mobile number");
 
         otpForm.classList.remove('hidden');
 
         resendSection.classList.remove('hidden');
 
         startCountdown();
-
-    }, 2000);
+    })
+    .catch((error) => {
+        loader.style.display = 'none';
+        generateBtn.disabled = false;
+        showToast(error.message || "Unable to generate OTP", "error");
+    });
 }
 
 function resendOtp() {
@@ -546,9 +564,28 @@ function resendOtp() {
 
     resendBtn.classList.add('hidden');
 
-    showToast("OTP resent successfully");
+    const formData = new FormData();
+    formData.append('token', <?php echo json_encode($token, JSON_UNESCAPED_UNICODE); ?>);
 
-    startCountdown();
+    fetch('../api/generate_otp.php', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin'
+    })
+    .then(async (response) => {
+        const payload = await response.json().catch(() => ({}));
+
+        if (!response.ok || payload.status === false) {
+            throw new Error(payload.message || 'Unable to resend OTP');
+        }
+
+        showToast(payload.message || "OTP resent successfully");
+        startCountdown();
+    })
+    .catch((error) => {
+        showToast(error.message || "Unable to resend OTP", "error");
+        resendBtn.classList.remove('hidden');
+    });
 }
 
 document.getElementById('otpForm').addEventListener('submit', function(event) {

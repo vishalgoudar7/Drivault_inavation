@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 $basePath = getenv('APP_BASE_PATH') ?: '';
-$localUrl = getenv('APP_LOCAL_URL') ?: 'http://localhost' . $basePath;
+$localUrl = getenv('APP_LOCAL_URL') ?: 'http://103.174.148.208' . $basePath;
 $androidEmulatorUrl = getenv('APP_ANDROID_EMULATOR_URL') ?: 'http://10.0.2.2' . $basePath;
 $productionUrl = getenv('APP_PRODUCTION_URL') ?: 'https://drivault.com' . $basePath;
 

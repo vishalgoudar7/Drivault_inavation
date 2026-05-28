@@ -29,7 +29,7 @@ if ($accountCreatedDetails !== null) {
 
 <title>Set Password</title>
 
-<link rel="icon" type="image/x-icon" href="/php_invitation_system/assets/Photos/favicon.ico">
+<link rel="icon" type="image/x-icon" href="/assets/Photos/favicon.ico">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 
@@ -350,7 +350,7 @@ button:disabled{
         <div class="logo">
 
             <div class="logo-box">
-                <img src="/php_invitation_system/assets/Photos/icon-192.png" alt="Drivault logo">
+                <img src="/assets/Photos/icon-192.png" alt="Drivault logo">
             </div>
 
             <h1>Drivault</h1>
@@ -508,7 +508,7 @@ button:disabled{
                 >
 
                     <img
-                        src="/php_invitation_system/assets/Photos/googlePlay.png"
+                        src="/assets/Photos/googlePlay.png"
                         alt="Get it on Google Play"
                     >
 

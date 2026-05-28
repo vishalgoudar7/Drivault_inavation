@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $dbname = "invitation_system";
-$username = "root";
-$password = "";
+$username = "drivault_user";
+$password = "Drivault@123";
 
 $defaultAdminName = 'Drivault Admin';
 $defaultAdminEmail = 'admin@drivault.com';

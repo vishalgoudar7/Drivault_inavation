@@ -14,6 +14,7 @@ $mailConfig = require __DIR__ . '/../config/mail.php';
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+
 function formatDatabaseErrorMessage(mysqli_sql_exception $exception): string
 {
     $errorCode = (int) $exception->getCode();
@@ -66,9 +67,13 @@ if (preg_match('/^[0-9+\-\s()]{7,20}$/', $phone) !== 1) {
 }
 
 $token = bin2hex(random_bytes(32));
+
 $verificationLink = buildPublicUrl(
-    (string) ($appConfig['base_url'] ?? 'http://localhost/php_invitation_system'),
-    sprintf('api/generate_otp.php?token=%s', urlencode($token))
+    (string) ($appConfig['base_url'] ?? 'http://103.174.148.208'),
+    sprintf(
+        'api/generate_otp.php?token=%s',
+        urlencode($token)
+    )
 );
 
 $smtpHost = (string) ($mailConfig['host'] ?? '');
